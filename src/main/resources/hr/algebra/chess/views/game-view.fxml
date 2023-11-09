@@ -16,9 +16,9 @@
         <menus>
           <Menu mnemonicParsing="false" text="Game">
             <items>
-              <MenuItem fx:id="miNewGame" mnemonicParsing="false" onAction="#newGame" text="New Game" />
-                  <MenuItem fx:id="miSaveGame" mnemonicParsing="false" onAction="#saveGame" text="Save Game" />
-                  <MenuItem fx:id="miLoadGame" mnemonicParsing="false" onAction="#loadGame" text="Load Game" />
+              <MenuItem mnemonicParsing="false" onAction="#newGame" text="New Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveGame" text="Save Game" />
+                  <MenuItem mnemonicParsing="false" onAction="#loadGame" text="Load Game" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Documentation" />

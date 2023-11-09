@@ -2,8 +2,6 @@ package hr.algebra.chess.model;
 
 import hr.algebra.chess.utils.ImageUtils;
 import hr.algebra.chess.utils.PieceUtils;
-
-import java.io.Serializable;
 import java.util.List;
 
 public class GameBoard {

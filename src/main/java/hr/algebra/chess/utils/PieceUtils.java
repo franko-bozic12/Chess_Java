@@ -12,7 +12,7 @@ public class PieceUtils {
     }
 
     public static List<Piece> generatePieces(List<ImageView> images) {
-        return new ArrayList<Piece>(List.of(
+        return new ArrayList<>(List.of(
                 new Bishop(2, 7, images.get(0), "images/pieces/BishopWhite.png", Team.White),
                 new Bishop(5, 7, images.get(1), "images/pieces/BishopWhite.png", Team.White),
                 new Bishop(2, 0, images.get(2), "images/pieces/BishopBlack.png", Team.Black),

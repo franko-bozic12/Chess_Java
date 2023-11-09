@@ -41,10 +41,6 @@ public abstract class Piece implements Serializable {
         return teamColor;
     }
 
-    public String getImgString() {
-        return imgString;
-    }
-
     public void setImage() {
        img = new ImageView(new Image(Objects.requireNonNull(MainApplication.class.getResourceAsStream(imgString))));
     }
