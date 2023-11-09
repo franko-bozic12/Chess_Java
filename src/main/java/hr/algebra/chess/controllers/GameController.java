@@ -1,8 +1,6 @@
 package hr.algebra.chess.controllers;
 
-import hr.algebra.chess.model.GameBoard;
-import hr.algebra.chess.model.Team;
-import hr.algebra.chess.model.Tile;
+import hr.algebra.chess.model.*;
 import hr.algebra.chess.model.pieces.King;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,9 +10,12 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import java.io.*;
 import java.util.List;
 import java.util.Objects;
 
+import static hr.algebra.chess.model.GameBoard.gameBoard;
+import static hr.algebra.chess.model.GameBoard.playerTurn;
 import static hr.algebra.chess.utils.GameUtils.*;
 
 public class GameController {
@@ -45,8 +46,6 @@ public class GameController {
             F1, F2, F3, F4, F5, F6, F7, F8,
             G1, G2, G3, G4, G5, G6, G7, G8,
             H1, H2, H3, H4, H5, H6, H7, H8;
-
-    private static Team playerTurn;
     private static Button selectedFigure;
     private static List<Tile> movableTiles;
     private static boolean win = false;
@@ -119,9 +118,9 @@ public class GameController {
         board[7][6] = new Tile(G1);
         board[7][7] = new Tile(H1);
 
-        GameBoard.gameBoard = board;
+        gameBoard = board;
         GameBoard.setBoard();
-        playerTurn = Team.White;
+        GameBoard.playerTurn = Team.White;
         selectedFigure = null;
         movableTiles = null;
     }
@@ -161,16 +160,95 @@ public class GameController {
         }
     }
 
+    public void newGame() {
+        if(selectedFigure != null)
+            selectedFigure.setBorder(null);
+        removeMarks();
+        GameBoard.clearBoard();
+        GameBoard.setBoard();
+        GameBoard.playerTurn = Team.White;
+    }
+
+    public void saveGame() {
+        Piece[][] piecesToSave = loadPieces();
+
+        GameState gameBoardToSave = new GameState(piecesToSave, playerTurn);
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("saveGame.dat"))) {
+            oos.writeObject(gameBoardToSave);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Save game successful!");
+            alert.setHeaderText(null);
+            alert.setContentText("You have successfully saved the game!");
+
+            alert.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Piece[][] loadPieces() {
+        Piece[][] pieces = new Piece[NUM_ROWS][NUM_COLS];
+
+        for (int i = 0; i < NUM_ROWS; i++)
+        {
+            for (int j = 0; j < NUM_COLS; j++)
+            {
+                pieces[i][j] = gameBoard[i][j].getPiece();
+            }
+        }
+
+        return pieces;
+    }
+
+
+    public void loadGame() {
+        GameBoard.clearBoard();
+        GameState recoveredGameBoard;
+
+        try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream("saveGame.dat"))) {
+            recoveredGameBoard = (GameState) oos.readObject();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Load game successful!");
+            alert.setHeaderText(null);
+            alert.setContentText("You have successfully loaded the game!");
+
+            alert.showAndWait();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        playerTurn = recoveredGameBoard.playerTurn();
+
+        Piece[][] pieces = recoveredGameBoard.gameBoard();
+        for(int i = 0; i < NUM_ROWS; i++)
+        {
+            for(int j = 0; j < NUM_COLS; j++)
+            {
+                if(pieces[i][j] != null)
+                {
+                    pieces[i][j].setImage();
+                    gameBoard[i][j].setPiece(pieces[i][j]);
+                    gameBoard[i][j].getButton().setGraphic(pieces[i][j].getImg());
+                }
+
+            }
+        }
+    }
+
     private void endGame() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("End of the game");
         alert.setHeaderText(null);
-        alert.setContentText(playerTurn.toString() + " wins!");
+        alert.setContentText(GameBoard.playerTurn.toString() + " wins!");
         alert.showAndWait();
 
         GameBoard.clearBoard();
         GameBoard.setBoard();
-        playerTurn = Team.White;
+        GameBoard.playerTurn = Team.White;
     }
 
     private void removeMarks() {
@@ -178,9 +256,9 @@ public class GameController {
         {
             for(int j = 0; j < NUM_COLS; j++)
             {
-                if(movableTiles.contains(GameBoard.gameBoard[i][j]))
+                if(movableTiles.contains(gameBoard[i][j]))
                 {
-                    GameBoard.gameBoard[i][j].getButton().setBorder(null);
+                    gameBoard[i][j].getButton().setBorder(null);
                 }
             }
         }
@@ -192,9 +270,9 @@ public class GameController {
         {
             for(int j = 0; j < NUM_COLS; j++)
             {
-                if(movableTiles.contains(GameBoard.gameBoard[i][j]))
+                if(movableTiles.contains(gameBoard[i][j]))
                 {
-                    GameBoard.gameBoard[i][j].getButton().setBorder(MOVABLE_BORDER);
+                    gameBoard[i][j].getButton().setBorder(MOVABLE_BORDER);
                 }
             }
         }
@@ -234,16 +312,16 @@ public class GameController {
     }
 
     private void changeTurn() {
-        if(playerTurn == Team.White)
+        if(GameBoard.playerTurn == Team.White)
         {
-            playerTurn = Team.Black;
+            GameBoard.playerTurn = Team.Black;
             return;
         }
-        playerTurn = Team.White;
+        GameBoard.playerTurn = Team.White;
     }
 
     private boolean isYourColor(Button clickedButton) {
         Tile selectedTile = findTile(clickedButton);
-        return Objects.requireNonNull(selectedTile).getPiece().getTeamColor() == playerTurn;
+        return Objects.requireNonNull(selectedTile).getPiece().getTeamColor() == GameBoard.playerTurn;
     }
 }

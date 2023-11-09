@@ -1,6 +1,5 @@
 package hr.algebra.chess.model.pieces;
 
-import hr.algebra.chess.model.GameBoard;
 import hr.algebra.chess.model.Piece;
 import hr.algebra.chess.model.Team;
 import hr.algebra.chess.model.Tile;
@@ -18,8 +17,8 @@ import static hr.algebra.chess.utils.MovementUtils.checkHorizontalMovement;
 import static hr.algebra.chess.utils.MovementUtils.checkVerticalMovement;
 
 public class Rook extends Piece {
-    public Rook(int locationX, int locationY, ImageView img, Team teamColor) {
-        super(locationX, locationY, img, teamColor);
+    public Rook(int locationX, int locationY, ImageView img, String imgString, Team teamColor) {
+        super(locationX, locationY, img, imgString, teamColor);
     }
 
     @Override

@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +26,7 @@ public class ImageUtils {
         Image rookBlackImg = new Image(Objects.requireNonNull(MainApplication.class.getResourceAsStream("images/pieces/RookBlack.png")));
         Image rookWhiteImg = new Image(Objects.requireNonNull(MainApplication.class.getResourceAsStream("images/pieces/RookWhite.png")));
 
-        return new ArrayList<ImageView>(List.of(
+        return new ArrayList<>(List.of(
                 new ImageView(bishopWhiteImg),
                 new ImageView(bishopWhiteImg),
                 new ImageView(bishopBlackImg),

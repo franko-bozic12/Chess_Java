@@ -6,8 +6,9 @@ import hr.algebra.chess.utils.PieceUtils;
 import java.io.Serializable;
 import java.util.List;
 
-public class GameBoard implements Serializable {
+public class GameBoard {
     public static Tile[][] gameBoard;
+    public static Team playerTurn;
 
     public static void setBoard() {
         List<Piece> pieces = PieceUtils.generatePieces(ImageUtils.prepareImages());

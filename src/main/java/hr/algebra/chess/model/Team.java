@@ -1,5 +1,7 @@
 package hr.algebra.chess.model;
 
-public enum Team {
+import java.io.Serializable;
+
+public enum Team implements Serializable {
     White, Black
 }

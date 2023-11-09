@@ -16,8 +16,8 @@ import static hr.algebra.chess.utils.GameUtils.getTileLocation;
 import static hr.algebra.chess.utils.MovementUtils.*;
 
 public class Queen extends Piece {
-    public Queen(int locationX, int locationY, ImageView img, Team teamColor) {
-        super(locationX, locationY, img, teamColor);
+    public Queen(int locationX, int locationY, ImageView img, String imgString, Team teamColor) {
+        super(locationX, locationY, img, imgString, teamColor);
     }
 
     @Override

@@ -16,8 +16,8 @@ import static hr.algebra.chess.utils.GameUtils.findTile;
 import static hr.algebra.chess.utils.GameUtils.getTileLocation;
 
 public class King extends Piece {
-    public King(int locationX, int locationY, ImageView img, Team teamColor) {
-        super(locationX, locationY, img, teamColor);
+    public King(int locationX, int locationY, ImageView img, String imgString, Team teamColor) {
+        super(locationX, locationY, img, imgString, teamColor);
     }
 
     @Override
