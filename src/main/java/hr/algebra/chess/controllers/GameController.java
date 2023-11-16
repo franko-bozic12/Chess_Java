@@ -56,7 +56,7 @@ public class GameController {
     private static boolean win = false;
 
     private static final String CLASSES_PATH = "target/classes/";
-    private static final String DOCUMENTATION_PATH = "target/documentation";
+    private static final String DOCUMENTATION_PATH = "target/";
     private static final String EXT = ".html";
 
     public void initialize() {
