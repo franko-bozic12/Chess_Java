@@ -2,6 +2,7 @@ package hr.algebra.chess.controllers;
 
 import hr.algebra.chess.model.*;
 import hr.algebra.chess.model.pieces.King;
+import hr.algebra.chess.utils.ReflectionUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -11,8 +12,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.io.*;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static hr.algebra.chess.model.GameBoard.gameBoard;
 import static hr.algebra.chess.model.GameBoard.playerTurn;
@@ -49,6 +54,10 @@ public class GameController {
     private static Button selectedFigure;
     private static List<Tile> movableTiles;
     private static boolean win = false;
+
+    private static final String CLASSES_PATH = "target/classes/";
+    private static final String DOCUMENTATION_PATH = "target/documentation";
+    private static final String EXT = ".html";
 
     public void initialize() {
         Tile[][] board = new Tile[NUM_ROWS][NUM_COLS];
@@ -161,9 +170,12 @@ public class GameController {
     }
 
     public void newGame() {
-        if(selectedFigure != null)
+        if(selectedFigure != null) {
             selectedFigure.setBorder(null);
-        removeMarks();
+        }
+        if(movableTiles != null) {
+            removeMarks();
+        }
         GameBoard.clearBoard();
         GameBoard.setBoard();
         GameBoard.playerTurn = Team.White;
@@ -174,7 +186,7 @@ public class GameController {
 
         GameState gameBoardToSave = new GameState(piecesToSave, playerTurn);
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("saveGame.dat"))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("target/saveGame.dat"))) {
             oos.writeObject(gameBoardToSave);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -207,7 +219,7 @@ public class GameController {
         GameBoard.clearBoard();
         GameState recoveredGameBoard;
 
-        try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream("saveGame.dat"))) {
+        try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream("target/saveGame.dat"))) {
             recoveredGameBoard = (GameState) oos.readObject();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -323,5 +335,44 @@ public class GameController {
     private boolean isYourColor(Button clickedButton) {
         Tile selectedTile = findTile(clickedButton);
         return Objects.requireNonNull(selectedTile).getPiece().getTeamColor() == GameBoard.playerTurn;
+    }
+
+    public void generateDocumentation() {
+        try {
+            Files.walkFileTree(Paths.get(CLASSES_PATH), new SimpleFileVisitor<>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    createDocumentation(file);
+                    return super.visitFile(file, attrs);
+                }
+            });
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void createDocumentation(Path path) throws IOException {
+        if (path.toString().contains("$")
+                || path.toString().contains("images")
+                || path.toString().contains("views")
+                || path.toString().contains("module-info.class")) {
+            return;
+        }
+        String className = StreamSupport.stream(path.spliterator(), false)
+                .skip(2)
+                .map(p -> p.toString().contains(".") ? p.toString().substring(0, p.toString().indexOf(".")) : p.toString())
+                .collect(Collectors.joining("."));
+        try {
+            Class<?> clazz = Class.forName(className);
+
+            StringBuilder documentation = new StringBuilder();
+            ReflectionUtils.readClassAndMembersInfo(clazz, documentation);
+
+            Files.writeString(Paths.get(DOCUMENTATION_PATH, clazz.getSimpleName() + EXT), documentation.toString());
+
+        } catch (ClassNotFoundException e) {
+            throw new IOException(e);
+        }
+
     }
 }

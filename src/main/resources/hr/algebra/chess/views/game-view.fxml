@@ -10,380 +10,249 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="hr.algebra.chess.controllers.GameController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.algebra.chess.controllers.GameController">
    <MenuBar>
       <Menu mnemonicParsing="false" text="Game">
-         <MenuItem mnemonicParsing="false" onAction="#newGame" text="New Game"/>
-         <MenuItem mnemonicParsing="false" onAction="#saveGame" text="Save Game"/>
-         <MenuItem mnemonicParsing="false" onAction="#loadGame" text="Load Game"/>
+         <MenuItem mnemonicParsing="false" onAction="#newGame" text="New Game" />
+         <MenuItem mnemonicParsing="false" onAction="#saveGame" text="Save Game" />
+         <MenuItem mnemonicParsing="false" onAction="#loadGame" text="Load Game" />
       </Menu>
-      <Menu mnemonicParsing="false" text="Documentation"/>
+      <Menu mnemonicParsing="false" text="Documentation">
+         <items>
+            <MenuItem mnemonicParsing="false" onAction="#generateDocumentation" text="Create" />
+         </items></Menu>
    </MenuBar>
    <AnchorPane prefHeight="742.0" prefWidth="700.0" style="-fx-background-color: #ECF0F1;">
-      <Button fx:id="A1" layoutX="70.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="B1" layoutX="140.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="C1" layoutX="210.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="B2" layoutX="140.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="C3" layoutX="210.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="A3" layoutX="70.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="B4" layoutX="140.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="C5" layoutX="210.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="A5" layoutX="70.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="B6" layoutX="140.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="A7" layoutX="70.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="D2" layoutX="280.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="E1" layoutX="350.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="E3" layoutX="350.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="D4" layoutX="280.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="E5" layoutX="350.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="D6" layoutX="280.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="C7" layoutX="210.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="B8" layoutX="140.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="D8" layoutX="280.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="F2" layoutX="420.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="G1" layoutX="490.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="H2" layoutX="560.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="G3" layoutX="490.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="F4" layoutX="420.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="H4" layoutX="560.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="G5" layoutX="490.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="F6" layoutX="420.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="E7" layoutX="350.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="H6" layoutX="560.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="G7" layoutX="490.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="F8" layoutX="420.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="H8" layoutX="560.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;"/>
-      <Button fx:id="A2" layoutX="70.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="B3" layoutX="140.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="A4" layoutX="70.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="B5" layoutX="140.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="A6" layoutX="70.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="B7" layoutX="140.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="A8" layoutX="70.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="C2" layoutX="210.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="C4" layoutX="210.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="C6" layoutX="210.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="C8" layoutX="210.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="D1" layoutX="280.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="D3" layoutX="280.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="D5" layoutX="280.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="D7" layoutX="280.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="F1" layoutX="420.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="E2" layoutX="350.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="E4" layoutX="350.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="E6" layoutX="350.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="F3" layoutX="420.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="G2" layoutX="490.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="H1" layoutX="560.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="H3" layoutX="560.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="G4" layoutX="490.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="F5" layoutX="420.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="H5" layoutX="560.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="G6" layoutX="490.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="F7" layoutX="420.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="H7" layoutX="560.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="G8" layoutX="490.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Button fx:id="E8" layoutX="350.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity"
-              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed"
-              prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;"/>
-      <Line endX="665.0" endY="35.0" layoutY="-13.0" startX="35.0" startY="35.0"/>
-      <Line endX="35.0" endY="665.0" layoutY="-13.0" startX="35.0" startY="35.0"/>
-      <Line endX="665.0" endY="665.0" layoutY="-13.0" startX="35.0" startY="665.0"/>
-      <Line endX="665.0" endY="35.0" layoutY="-13.0" startX="665.0" startY="665.0"/>
-      <Line endX="620.3999633789062" endY="55.99999237060547" layoutX="10.0" layoutY="-3.0"
-            startX="59.99999237060547" startY="55.99999237060547"/>
-      <Line endX="49.99999237060547" endY="613.3999633789062" layoutX="20.0" layoutY="7.0" startX="49.99999237060547"
-            startY="45.99999237060547"/>
-      <Line endX="600.3999633789062" endY="35.99999237060547" layoutX="30.0" layoutY="17.0"
-            startX="600.3999633789062" startY="603.3999633789062"/>
-      <Line endX="30.49999237060547" endY="593.89990234375" layoutX="40.0" layoutY="27.0" startX="589.8999633789062"
-            startY="593.89990234375"/>
+      <Button fx:id="A1" layoutX="70.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="B1" layoutX="140.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="C1" layoutX="210.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="B2" layoutX="140.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="C3" layoutX="210.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="A3" layoutX="70.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="B4" layoutX="140.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="C5" layoutX="210.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="A5" layoutX="70.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="B6" layoutX="140.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="A7" layoutX="70.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="D2" layoutX="280.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="E1" layoutX="350.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="E3" layoutX="350.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="D4" layoutX="280.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="E5" layoutX="350.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="D6" layoutX="280.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="C7" layoutX="210.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="B8" layoutX="140.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="D8" layoutX="280.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="F2" layoutX="420.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="G1" layoutX="490.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="H2" layoutX="560.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="G3" layoutX="490.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="F4" layoutX="420.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="H4" layoutX="560.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="G5" layoutX="490.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="F6" layoutX="420.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="E7" layoutX="350.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="H6" layoutX="560.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="G7" layoutX="490.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="F8" layoutX="420.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="H8" layoutX="560.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #7D7777; -fx-background-radius: 0;" />
+      <Button fx:id="A2" layoutX="70.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="B3" layoutX="140.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="A4" layoutX="70.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="B5" layoutX="140.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="A6" layoutX="70.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="B7" layoutX="140.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="A8" layoutX="70.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="C2" layoutX="210.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="C4" layoutX="210.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="C6" layoutX="210.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="C8" layoutX="210.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="D1" layoutX="280.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="D3" layoutX="280.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="D5" layoutX="280.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="D7" layoutX="280.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="F1" layoutX="420.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="E2" layoutX="350.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="E4" layoutX="350.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="E6" layoutX="350.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="F3" layoutX="420.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="G2" layoutX="490.0" layoutY="479.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="H1" layoutX="560.0" layoutY="550.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="H3" layoutX="560.0" layoutY="408.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="G4" layoutX="490.0" layoutY="337.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="F5" layoutX="420.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="H5" layoutX="560.0" layoutY="266.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="G6" layoutX="490.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="F7" layoutX="420.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="H7" layoutX="560.0" layoutY="124.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="G8" layoutX="490.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Button fx:id="E8" layoutX="350.0" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: white; -fx-background-radius: 0;" />
+      <Line endX="665.0" endY="35.0" layoutY="-13.0" startX="35.0" startY="35.0" />
+      <Line endX="35.0" endY="665.0" layoutY="-13.0" startX="35.0" startY="35.0" />
+      <Line endX="665.0" endY="665.0" layoutY="-13.0" startX="35.0" startY="665.0" />
+      <Line endX="665.0" endY="35.0" layoutY="-13.0" startX="665.0" startY="665.0" />
+      <Line endX="620.3999633789062" endY="55.99999237060547" layoutX="10.0" layoutY="-3.0" startX="59.99999237060547" startY="55.99999237060547" />
+      <Line endX="49.99999237060547" endY="613.3999633789062" layoutX="20.0" layoutY="7.0" startX="49.99999237060547" startY="45.99999237060547" />
+      <Line endX="600.3999633789062" endY="35.99999237060547" layoutX="30.0" layoutY="17.0" startX="600.3999633789062" startY="603.3999633789062" />
+      <Line endX="30.49999237060547" endY="593.89990234375" layoutX="40.0" layoutY="27.0" startX="589.8999633789062" startY="593.89990234375" />
       <Label layoutX="50.0" layoutY="571.0" text="1">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="50.0" layoutY="500.0" text="2">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="50.0" layoutY="429.0" text="3">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="50.0" layoutY="358.0" text="4">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="50.0" layoutY="287.0" text="5">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="50.0" layoutY="216.0" text="6">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="50.0" layoutY="145.0" text="7">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="50.0" layoutY="74.0" text="8">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="99.0" layoutY="621.0" text="A">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="169.0" layoutY="621.0" text="B">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="239.0" layoutY="621.0" text="C">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="309.0" layoutY="621.0" text="D">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="379.0" layoutY="621.0" text="E">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="449.0" layoutY="621.0" text="F">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="519.0" layoutY="621.0" text="G">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="589.0" layoutY="621.0" text="H">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="640.0" layoutY="74.0" text="8">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="640.0" layoutY="138.0" text="7">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="640.0" layoutY="216.0" text="6">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="640.0" layoutY="287.0" text="5">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="640.0" layoutY="358.0" text="4">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="640.0" layoutY="429.0" text="3">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="640.0" layoutY="500.0" text="2">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="640.0" layoutY="571.0" text="1">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="99.0" layoutY="26.0" text="A">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="169.0" layoutY="26.0" text="B">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="239.0" layoutY="26.0" text="C">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="308.0" layoutY="26.0" text="D">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="380.0" layoutY="26.0" text="E">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="449.0" layoutY="26.0" text="F">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="519.0" layoutY="26.0" text="G">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label layoutX="588.0" layoutY="26.0" text="H">
          <font>
-            <Font name="System Bold" size="18.0"/>
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
    </AnchorPane>
