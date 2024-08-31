@@ -23,7 +23,7 @@ public final class ReflectionUtils {
     public static void appendPackage(Class<?> clazz, StringBuilder classInfo) {
         classInfo
                 .append(clazz.getPackage())
-                .append(System.lineSeparator()) // platform independent
+                .append(System.lineSeparator())
                 .append(System.lineSeparator())
                 .append("<br>");
     }
@@ -111,8 +111,8 @@ public final class ReflectionUtils {
     }
 
     private static void appendConstructors(Class<?> clazz, StringBuilder classAndMembersInfo) {
-        Constructor[] constructors = clazz.getDeclaredConstructors();
-        for (Constructor constructor : constructors) {
+        Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+        for (Constructor<?> constructor : constructors) {
             classAndMembersInfo
                     .append(System.lineSeparator())
                     .append(System.lineSeparator())
@@ -152,7 +152,7 @@ public final class ReflectionUtils {
             classAndMembersInfo.append(
                     Stream.of(executable.getExceptionTypes())
                             .map(Class::getSimpleName)
-                            .collect(Collectors.joining(", ", " throws ", ""))); // no String.empty like in C#
+                            .collect(Collectors.joining(", ", " throws ", "")));
         }
     }
 }

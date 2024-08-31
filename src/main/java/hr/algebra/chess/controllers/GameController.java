@@ -1,19 +1,33 @@
 package hr.algebra.chess.controllers;
 
+import hr.algebra.chess.MainApplication;
+import hr.algebra.chess.chat.RemoteChatService;
 import hr.algebra.chess.model.*;
 import hr.algebra.chess.model.pieces.King;
+import hr.algebra.chess.utils.NetworkingUtils;
 import hr.algebra.chess.utils.ReflectionUtils;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -41,6 +55,14 @@ public class GameController {
             new BorderWidths(5),
             new Insets(3)
     ));
+
+    @FXML
+    private TextArea chatTextArea;
+
+    @FXML
+    private TextField chatMessageTextField;
+
+    private static RemoteChatService chatServiceStub;
 
     @FXML
     private Button A1, A2, A3, A4, A5, A6, A7, A8,
@@ -132,6 +154,28 @@ public class GameController {
         GameBoard.playerTurn = Team.White;
         selectedFigure = null;
         movableTiles = null;
+
+        try {
+            Registry registry = LocateRegistry.getRegistry(
+                    NetworkConfiguration.HOST_NAME,
+                    NetworkConfiguration.RMI_PORT);
+            chatServiceStub = (RemoteChatService) registry.lookup(RemoteChatService.REMOTE_CHAT_OBJECT_NAME);
+        }
+        catch(RemoteException | NotBoundException ex) {
+            ex.printStackTrace();
+        }
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> refreshChatTexArea()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.playFromStart();
+
+        chatMessageTextField.setOnKeyPressed(
+                (e) -> {
+                    if(e.getCode() == KeyCode.ENTER) {
+                        sentChatMessage();
+                    }
+                }
+        );
     }
 
     public void buttonPressed(ActionEvent event) {
@@ -153,11 +197,13 @@ public class GameController {
             removeEnemy(clickedButton);
             moveToPosition(clickedButton);
             removeMarks();
+            changeTurn();
+
+            createAndSendBoard();
+
             if(win) {
-                endGame();
-            }
-            else {
                 changeTurn();
+                endGame(playerTurn);
             }
             win = false;
         }
@@ -166,7 +212,52 @@ public class GameController {
             moveToPosition(clickedButton);
             changeTurn();
             removeMarks();
+
+            createAndSendBoard();
         }
+    }
+
+    public void refreshChatTexArea() {
+
+        chatTextArea.clear();
+
+        try {
+            List<String> listOfChatMessages = chatServiceStub.getAllChatMessages();
+            for(String chatMessage :  listOfChatMessages) {
+                chatTextArea.appendText(chatMessage + "\n");
+            }
+        }
+        catch(RemoteException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void sentChatMessage() {
+        String chatMessage = chatMessageTextField.getText();
+        chatMessageTextField.clear();
+        try {
+            chatServiceStub.sendChatMessage(
+                    MainApplication.playerLoggedIn + ":" + chatMessage);
+        }
+        catch(RemoteException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //create game state and send it to server
+    public void createAndSendBoard() {
+        Piece[][] piecesToSave = loadPieces();
+
+        GameState createdGameBoard = new GameState(piecesToSave, playerTurn, win);
+
+        if(MainApplication.playerLoggedIn.name().equals(PlayerType.CLIENT.name())) {
+            NetworkingUtils.sendGameBoardToServer(createdGameBoard);
+        }
+        else {
+            NetworkingUtils.sendGameBoardToClient(createdGameBoard);
+        }
+
+        changeBoardState(false);
     }
 
     public void newGame() {
@@ -184,7 +275,7 @@ public class GameController {
     public void saveGame() {
         Piece[][] piecesToSave = loadPieces();
 
-        GameState gameBoardToSave = new GameState(piecesToSave, playerTurn);
+        GameState gameBoardToSave = new GameState(piecesToSave, playerTurn, win);
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("target/saveGame.dat"))) {
             oos.writeObject(gameBoardToSave);
@@ -214,9 +305,33 @@ public class GameController {
         return pieces;
     }
 
+    public static void restoreGameBoard(GameState gameBoardToRestore) {
+        GameBoard.clearBoard();
+        playerTurn = gameBoardToRestore.playerTurn();
+        Piece[][] pieces = gameBoardToRestore.gameBoard();
+        for(int i = 0; i < NUM_ROWS; i++)
+        {
+            for(int j = 0; j < NUM_COLS; j++)
+            {
+                if(pieces[i][j] != null)
+                {
+                    pieces[i][j].setImage();
+                    gameBoard[i][j].setPiece(pieces[i][j]);
+                    gameBoard[i][j].getButton().setGraphic(pieces[i][j].getImg());
+                }
+
+            }
+        }
+        changeBoardState(true);
+
+        if(gameBoardToRestore.win()) {
+            changeTurn();
+            endGame(playerTurn);
+        }
+        win = false;
+    }
 
     public void loadGame() {
-        GameBoard.clearBoard();
         GameState recoveredGameBoard;
 
         try (ObjectInputStream oos = new ObjectInputStream(new FileInputStream("target/saveGame.dat"))) {
@@ -233,29 +348,16 @@ public class GameController {
             throw new RuntimeException(e);
         }
 
+        restoreGameBoard(recoveredGameBoard);
+
         playerTurn = recoveredGameBoard.playerTurn();
-
-        Piece[][] pieces = recoveredGameBoard.gameBoard();
-        for(int i = 0; i < NUM_ROWS; i++)
-        {
-            for(int j = 0; j < NUM_COLS; j++)
-            {
-                if(pieces[i][j] != null)
-                {
-                    pieces[i][j].setImage();
-                    gameBoard[i][j].setPiece(pieces[i][j]);
-                    gameBoard[i][j].getButton().setGraphic(pieces[i][j].getImg());
-                }
-
-            }
-        }
     }
 
-    private void endGame() {
+    private static void endGame(Team playerTurn) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("End of the game");
         alert.setHeaderText(null);
-        alert.setContentText(GameBoard.playerTurn.toString() + " wins!");
+        alert.setContentText(playerTurn.toString() + " wins!");
         alert.showAndWait();
 
         GameBoard.clearBoard();
@@ -323,7 +425,7 @@ public class GameController {
         }
     }
 
-    private void changeTurn() {
+    private static void changeTurn() {
         if(GameBoard.playerTurn == Team.White)
         {
             GameBoard.playerTurn = Team.Black;
@@ -374,5 +476,13 @@ public class GameController {
             throw new IOException(e);
         }
 
+    }
+
+    public static void changeBoardState(Boolean enable) {
+        for(int i = 0; i < NUM_COLS; i++) {
+            for(int j = 0; j < NUM_ROWS; j++) {
+                gameBoard[i][j].getButton().setDisable(!enable);
+            }
+        }
     }
 }
