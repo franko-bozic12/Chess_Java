@@ -4,6 +4,8 @@ import hr.algebra.chess.MainApplication;
 import hr.algebra.chess.chat.RemoteChatService;
 import hr.algebra.chess.model.*;
 import hr.algebra.chess.model.pieces.King;
+import hr.algebra.chess.thread.GetTheLatestMoveThread;
+import hr.algebra.chess.thread.SaveMoveThread;
 import hr.algebra.chess.utils.NetworkingUtils;
 import hr.algebra.chess.utils.ReflectionUtils;
 import javafx.animation.Animation;
@@ -12,10 +14,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -28,6 +27,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -63,6 +63,9 @@ public class GameController {
     private TextField chatMessageTextField;
 
     private static RemoteChatService chatServiceStub;
+
+    @FXML
+    private Label theLastMoveLabel;
 
     @FXML
     private Button A1, A2, A3, A4, A5, A6, A7, A8,
@@ -155,27 +158,32 @@ public class GameController {
         selectedFigure = null;
         movableTiles = null;
 
-        try {
-            Registry registry = LocateRegistry.getRegistry(
-                    NetworkConfiguration.HOST_NAME,
-                    NetworkConfiguration.RMI_PORT);
-            chatServiceStub = (RemoteChatService) registry.lookup(RemoteChatService.REMOTE_CHAT_OBJECT_NAME);
-        }
-        catch(RemoteException | NotBoundException ex) {
-            ex.printStackTrace();
-        }
+        if(!PlayerType.SINGLE_PLAYER.name().equals(MainApplication.playerLoggedIn.name())) {
+            try {
+                Registry registry = LocateRegistry.getRegistry(
+                        NetworkConfiguration.HOST_NAME,
+                        NetworkConfiguration.RMI_PORT);
+                chatServiceStub = (RemoteChatService) registry.lookup(RemoteChatService.REMOTE_CHAT_OBJECT_NAME);
+            } catch (RemoteException | NotBoundException ex) {
+                ex.printStackTrace();
+            }
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> refreshChatTexArea()));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.playFromStart();
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> refreshChatTexArea()));
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.playFromStart();
 
-        chatMessageTextField.setOnKeyPressed(
-                (e) -> {
-                    if(e.getCode() == KeyCode.ENTER) {
-                        sentChatMessage();
+            chatMessageTextField.setOnKeyPressed(
+                    (e) -> {
+                        if (e.getCode() == KeyCode.ENTER) {
+                            sentChatMessage();
+                        }
                     }
-                }
-        );
+            );
+        }
+
+        GetTheLatestMoveThread newLatestMoveThread = new GetTheLatestMoveThread(theLastMoveLabel);
+        Thread runnerThread = new Thread(newLatestMoveThread);
+        runnerThread.start();
     }
 
     public void buttonPressed(ActionEvent event) {
@@ -194,12 +202,20 @@ public class GameController {
         }
         //check if you selected an enemy figure for attack
         else if(selectedFigure != null && clickedButton.getGraphic() != null && !isYourColor(clickedButton) && isMovableTile(clickedButton)) {
+            Piece pieceMoved = Objects.requireNonNull(findTile(selectedFigure)).getPiece();
+            String moveLocation = clickedButton.getId();
+
             removeEnemy(clickedButton);
             moveToPosition(clickedButton);
             removeMarks();
             changeTurn();
 
-            createAndSendBoard();
+            createAndSaveMove(pieceMoved, moveLocation);
+
+            if(MainApplication.playerLoggedIn.equals(PlayerType.SERVER) || MainApplication.playerLoggedIn.equals(PlayerType.CLIENT))
+            {
+                createAndSendBoard();
+            }
 
             if(win) {
                 changeTurn();
@@ -209,12 +225,27 @@ public class GameController {
         }
         //check if you selected an empty space for movement
         else if(selectedFigure != null && clickedButton.getGraphic() == null && isMovableTile(clickedButton)) {
+            Piece pieceMoved = Objects.requireNonNull(findTile(selectedFigure)).getPiece();
+            String moveLocation = clickedButton.getId();
+
             moveToPosition(clickedButton);
             changeTurn();
             removeMarks();
 
-            createAndSendBoard();
+            createAndSaveMove(pieceMoved, moveLocation);
+
+            if(MainApplication.playerLoggedIn.equals(PlayerType.SERVER) || MainApplication.playerLoggedIn.equals(PlayerType.CLIENT))
+            {
+                createAndSendBoard();
+            }
         }
+    }
+
+    private void createAndSaveMove(Piece pieceMoved, String moveLocation) {
+        GameMove newGameMove = new GameMove(pieceMoved, moveLocation, LocalDateTime.now());
+        SaveMoveThread newSaveMoveThread = new SaveMoveThread(newGameMove);
+        Thread newStarterThread = new Thread(newSaveMoveThread);
+        newStarterThread.start();
     }
 
     public void refreshChatTexArea() {

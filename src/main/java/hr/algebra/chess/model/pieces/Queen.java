@@ -33,4 +33,9 @@ public class Queen extends Piece {
 
         return movableTiles;
     }
+
+    @Override
+    public String toString() {
+        return "Queen";
+    }
 }

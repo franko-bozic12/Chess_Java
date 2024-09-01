@@ -42,7 +42,7 @@ public class MainApplication extends Application {
 
         mainStage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("views/game-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 700);
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 750);
         mainStage.setTitle(playerLoggedIn.name());
         mainStage.setResizable(false);
         mainStage.getIcons().add(new Image(Objects.requireNonNull(MainApplication.class.getResourceAsStream("images/icon.png"))));
@@ -57,9 +57,12 @@ public class MainApplication extends Application {
             playerLoggedIn = PlayerType.SERVER;
             new Thread(MainApplication::startServer).start();
         }
-        else {
+        else if(PlayerType.CLIENT.name().equals(playerName)){
             playerLoggedIn = PlayerType.CLIENT;
             new Thread(MainApplication::startClient).start();
+        }
+        else if(PlayerType.SINGLE_PLAYER.name().equals(playerName)) {
+            playerLoggedIn = PlayerType.SINGLE_PLAYER;
         }
 
         System.out.println("The player name is " + playerLoggedIn);

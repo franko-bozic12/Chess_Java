@@ -31,4 +31,9 @@ public class Bishop extends Piece {
 
         return movableTiles;
     }
+
+    @Override
+    public String toString() {
+        return "Bishop";
+    }
 }

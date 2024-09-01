@@ -44,4 +44,9 @@ public abstract class Piece implements Serializable {
     public void setImage() {
        img = new ImageView(new Image(Objects.requireNonNull(MainApplication.class.getResourceAsStream(imgString))));
     }
+
+    @Override
+    public String toString() {
+        return "Name";
+    }
 }

@@ -56,4 +56,9 @@ public class Knight extends Piece {
     private boolean isOpponentPiece(Tile tile, Team teamColor) {
         return tile.getPiece().getTeamColor() != teamColor;
     }
+
+    @Override
+    public String toString() {
+        return "Knight";
+    }
 }

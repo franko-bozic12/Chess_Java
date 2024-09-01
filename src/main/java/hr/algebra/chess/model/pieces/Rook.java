@@ -32,4 +32,9 @@ public class Rook extends Piece {
 
         return movableTiles;
     }
+    @Override
+    public String toString() {
+        return "Rook";
+    }
+
 }
