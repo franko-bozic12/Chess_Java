@@ -4,10 +4,11 @@ import hr.algebra.chess.MainApplication;
 import hr.algebra.chess.chat.RemoteChatService;
 import hr.algebra.chess.model.*;
 import hr.algebra.chess.model.pieces.King;
-import hr.algebra.chess.thread.GetTheLatestMoveThread;
 import hr.algebra.chess.thread.SaveMoveThread;
+import hr.algebra.chess.utils.GameUtils;
 import hr.algebra.chess.utils.NetworkingUtils;
 import hr.algebra.chess.utils.ReflectionUtils;
+import hr.algebra.chess.utils.XmlUtils;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -181,9 +182,10 @@ public class GameController {
             );
         }
 
+        /*
         GetTheLatestMoveThread newLatestMoveThread = new GetTheLatestMoveThread(theLastMoveLabel);
         Thread runnerThread = new Thread(newLatestMoveThread);
-        runnerThread.start();
+        runnerThread.start();*/
     }
 
     public void buttonPressed(ActionEvent event) {
@@ -204,13 +206,14 @@ public class GameController {
         else if(selectedFigure != null && clickedButton.getGraphic() != null && !isYourColor(clickedButton) && isMovableTile(clickedButton)) {
             Piece pieceMoved = Objects.requireNonNull(findTile(selectedFigure)).getPiece();
             String moveLocation = clickedButton.getId();
+            String oldLocation = selectedFigure.getId();
 
             removeEnemy(clickedButton);
             moveToPosition(clickedButton);
             removeMarks();
             changeTurn();
 
-            createAndSaveMove(pieceMoved, moveLocation);
+            createAndSaveMove(pieceMoved, moveLocation, oldLocation);
 
             if(MainApplication.playerLoggedIn.equals(PlayerType.SERVER) || MainApplication.playerLoggedIn.equals(PlayerType.CLIENT))
             {
@@ -227,12 +230,13 @@ public class GameController {
         else if(selectedFigure != null && clickedButton.getGraphic() == null && isMovableTile(clickedButton)) {
             Piece pieceMoved = Objects.requireNonNull(findTile(selectedFigure)).getPiece();
             String moveLocation = clickedButton.getId();
+            String oldLocation = selectedFigure.getId();
 
             moveToPosition(clickedButton);
             changeTurn();
             removeMarks();
 
-            createAndSaveMove(pieceMoved, moveLocation);
+            createAndSaveMove(pieceMoved, moveLocation, oldLocation);
 
             if(MainApplication.playerLoggedIn.equals(PlayerType.SERVER) || MainApplication.playerLoggedIn.equals(PlayerType.CLIENT))
             {
@@ -241,8 +245,9 @@ public class GameController {
         }
     }
 
-    private void createAndSaveMove(Piece pieceMoved, String moveLocation) {
-        GameMove newGameMove = new GameMove(pieceMoved, moveLocation, LocalDateTime.now());
+    private void createAndSaveMove(Piece pieceMoved, String moveLocation, String oldLocation) {
+        GameMove newGameMove = new GameMove(pieceMoved, moveLocation, oldLocation, LocalDateTime.now());
+        XmlUtils.saveGameMoveToXml(newGameMove);
         SaveMoveThread newSaveMoveThread = new SaveMoveThread(newGameMove);
         Thread newStarterThread = new Thread(newSaveMoveThread);
         newStarterThread.start();
@@ -360,6 +365,10 @@ public class GameController {
             endGame(playerTurn);
         }
         win = false;
+    }
+
+    public void replayTheLastGame() {
+        GameUtils.replayTheLastGame();
     }
 
     public void loadGame() {

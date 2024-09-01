@@ -8,11 +8,13 @@ public class GameMove implements Serializable {
 
     private Piece piece;
     private String location;
+    private String oldLocation;
     private LocalDateTime dateTime;
 
-    public GameMove(Piece piece, String location, LocalDateTime dateTime) {
+    public GameMove(Piece piece, String location, String oldLocation, LocalDateTime dateTime) {
         this.piece = piece;
         this.location = location;
+        this.oldLocation = oldLocation;
         this.dateTime = dateTime;
     }
 
@@ -38,5 +40,13 @@ public class GameMove implements Serializable {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public String getOldLocation() {
+        return oldLocation;
+    }
+
+    public void setOldLocation(String oldLocation) {
+        this.oldLocation = oldLocation;
     }
 }
